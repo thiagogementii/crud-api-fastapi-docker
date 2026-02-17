@@ -1,0 +1,71 @@
+from fastapi import FastAPI, Depends
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base, Session
+
+DATABASE_URL = "sqlite:///./test.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+SessionLocal = sessionmaker(bind=engine)
+Base = declarative_base()
+
+app = FastAPI()
+
+
+# Modelo do banco
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String)
+
+
+# Criar tabela automaticamente
+Base.metadata.create_all(bind=engine)
+
+
+# Dependência de sessão
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# Criar usuário
+@app.post("/users/")
+def create_user(name: str, email: str, db: Session = Depends(get_db)):
+    user = User(name=name, email=email)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+# Listar usuários
+@app.get("/users/")
+def list_users(db: Session = Depends(get_db)):
+    return db.query(User).all()
+
+
+# Atualizar usuário
+@app.put("/users/{user_id}")
+def update_user(user_id: int, name: str, email: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    user.name = name
+    user.email = email
+    db.commit()
+    return user
+
+
+# Deletar usuário
+@app.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    db.delete(user)
+    db.commit()
+    return {"message": "Usuário deletado"}
