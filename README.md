@@ -9,6 +9,12 @@ Projeto simples de API REST com operações CRUD utilizando:
 
 ## Como rodar
 
+* Iniciando o banco de dados 
+
+```
+docker-compose up -d
+```
+
 docker build -t crud-api .
 docker run -p 8000:8000 crud-api
 
