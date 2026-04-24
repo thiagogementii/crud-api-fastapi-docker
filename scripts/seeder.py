@@ -3,7 +3,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from faker import Faker
 
-from app.schemas.user import User
+from app.models.user import User
+
+from dotenv import load_dotenv
+load_dotenv()
 
 fake = Faker()
 

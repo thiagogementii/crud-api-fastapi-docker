@@ -1,0 +1,74 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist
+build
+.next
+out
+.cache
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc.*
+*.py,cover
+.env
+.venv
+venv/
+env/
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+
+# Docker
+Dockerfile*
+docker-compose.yml
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Tests / coverage
+coverage
+coverage.xml
+htmlcov/
+*.cover
+
+# Misc
+tmp
+temp
+*.tmp
+*.bak
+
+# Documentation (opcional)
+docs/
+*.md
+
+# Arquivos grandes / uploads
+uploads/
+*.zip
+*.tar
+*.gz
+*.rar
