@@ -100,4 +100,5 @@ secrets/
 staticfiles/
 
 # Alembic (se usar migrations)
-alembic/versions/*.pyc
+alembic/versions/*.pycdata/postgres/
+data/postgres/
